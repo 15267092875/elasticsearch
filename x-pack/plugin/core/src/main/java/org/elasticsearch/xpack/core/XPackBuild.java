@@ -28,19 +28,8 @@ public class XPackBuild {
         final String date;
 
         Path path = getElasticsearchCodebase();
-        if (path.toString().endsWith(".jar")) {
-            try (JarInputStream jar = new JarInputStream(Files.newInputStream(path))) {
-                Manifest manifest = jar.getManifest();
-                shortHash = manifest.getMainAttributes().getValue("Change");
-                date = manifest.getMainAttributes().getValue("Build-Date");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            // not running from a jar (unit tests, IDE)
-            shortHash = "Unknown";
-            date = "Unknown";
-        }
+        shortHash = "Unknown";
+        date = "Unknown";
 
         CURRENT = new XPackBuild(shortHash, date);
     }
